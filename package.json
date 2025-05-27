@@ -1,0 +1,23 @@
+{
+  "name": "yocker64-image-carousel",
+  "version": "1.0.0",
+  "description": "Create your own image carousel in a simple and standard way just by passing the parent node and the links to your images",
+  "keywords": [
+    "yocker64"
+  ],
+  "homepage": "https://github.com/Yocker64/image-carousel-npm-package#readme",
+  "bugs": {
+    "url": "https://github.com/Yocker64/image-carousel-npm-package/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yocker64/image-carousel-npm-package.git"
+  },
+  "license": "ISC",
+  "author": "yckr",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
