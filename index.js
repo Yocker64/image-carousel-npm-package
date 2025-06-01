@@ -1,42 +1,128 @@
+function createImageCarousel(images) {
+// Build carousel
+
+const carousel = document.createElement("div");
+carousel.className = "carousel";
+
+const track = document.createElement("div");
+track.className = "carousel-track";
+
+images.forEach(src => {
+  const slide = document.createElement("div");
+  slide.className = "carousel-slide";
+  const img = document.createElement("img");
+  img.src = src;
+  img.alt = "Carousel Image";
+  slide.appendChild(img);
+  track.appendChild(slide);
+});
+
+const prevButton = document.createElement("button");
+prevButton.className = "carousel-button prev";
+prevButton.innerHTML = "&#10094;";
+
+const nextButton = document.createElement("button");
+nextButton.className = "carousel-button next";
+nextButton.innerHTML = "&#10095;";
+
+carousel.appendChild(prevButton);
+carousel.appendChild(track);
+carousel.appendChild(nextButton);
 
 
-// let img4 = document.createElement("img");
-// img4.src = "cliff.jpg"
-// let img5 = document.createElement("img");
-// img5.src = "oses.jpg"
+// Carousel logic
+let currentIndex = 0;
+const updateCarousel = () => {
+  track.style.transform = `translateX(-${currentIndex * 100}%)`;
+};
 
-function formatImages(img, height, width) {
-  img.style.width = width;
-    img.style.height = height;
+prevButton.onclick = () => {
+  currentIndex = (currentIndex - 1 + images.length) % images.length;
+  updateCarousel();
+};
+
+nextButton.onclick = () => {
+  currentIndex = (currentIndex + 1) % images.length;
+  updateCarousel();
+};
+ return carousel;
 }
 
-function createImageCarousel() {
 
-  let width = "1000px";
-  let height =  "1000px";
-  let img1 = document.createElement("img");
-img1.src = "rose.jpg"
-let img2 = document.createElement("img");
-img2.src = "road.jpg"
-let img3 = document.createElement("img");
-img3.src = "roses.jpg"
+function injectCarouselStyles() {
+  // Inject styles
+const style = document.createElement("style");
+style.textContent = `
+  body {
+    margin: 0;
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #f0f0f0;
+  }
 
-let images = [img1, img2, img3];
-images.forEach(function(img){
-  formatImages(img, height, width)
-  document.body.appendChild(img);
-})
+  .carousel {
+    position: relative;
+    width: 600px;
+    height: 400px;
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    background: white;
+  }
 
+  .carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    height: 100%;
+  }
 
+  .carousel-slide {
+    min-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-  // document.body.appendChild(img4);
-  // document.body.appendChild(img5);
+  .carousel-slide img {
+    width: 80%;
+    height: auto;
+    object-fit: contain;
+  }
 
+  .carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    z-index: 10;
+    border-radius: 50%;
+    transition: background 0.3s;
+  }
 
+  .carousel-button:hover {
+    background: rgba(0, 0, 0, 0.6);
+  }
+
+  .carousel-button.prev {
+    left: 10px;
+  }
+
+  .carousel-button.next {
+    right: 10px;
+  }
+`;
+document.head.appendChild(style);
 }
 
-createImageCarousel();
-
-
-
-module.exports = createImageCarousel;
+module.exports = {
+  createImageCarousel,
+  injectCarouselStyles
+};
